@@ -210,7 +210,7 @@ class Graph:
                 copy = path.copy() 
                 if neighbor not in visited: 
                     # MISTAKE HERE - NEIGHBOR instead of Current_vertex AND COPY instead of path or path.copy!! 
-                    # YOU MUST COPY THE PATH
+                    # YOU MUST COPY THE
                     new_path = self.dfs_recursive(neighbor, target_value, visited, copy)
                     if new_path:
                         return new_path 
