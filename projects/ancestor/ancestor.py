@@ -1,3 +1,5 @@
+import sys 
+
 class Queue():
     def __init__(self):
         self.queue = []
@@ -22,7 +24,9 @@ class Graph:
         """
         Add a vertex to the graph.
         """
-        self.vertices[vertex_id] = set()
+        # ADDED THIS - it was because it was overriding 47/48
+        if vertex_id not in self.vertices:
+            self.vertices[vertex_id] = set()
 
 
     def add_edge(self, v1, v2):
@@ -34,6 +38,41 @@ class Graph:
         else:
             raise ValueError("vertex does not exist")
 
-
+# [(1, 3), (2, 3), (3, 6), (5, 6), (5, 7), (4, 5), (4, 8), (8, 9), (11, 8), (10, 1)]
 def earliest_ancestor(ancestors, starting_node):
-    pass
+    # step 1 make graph
+    g = Graph()
+    for member in ancestors:
+        parent,child = member
+        g.add_vertex(parent)
+        g.add_vertex(child)
+        # directed edge means pointing A to B in (A,B)
+        g.add_edge(child, parent)
+            
+    print(g.vertices)
+
+    # step 2 - traverse graph
+    q = Queue()
+    q.enqueue([starting_node])
+    # visited = set()
+
+    #BIG MISTAKE HERE - Earliest ancestor (if there isn't any - is -1) // and the path will always be 1
+    earliest_ancestor = -1
+    longest_path = 1
+
+    while q.size() > 0:
+        path = q.dequeue()
+        current_node = path[-1]
+        # take note of these two conditional statements
+        if current_node < earliest_ancestor and len(path) >= longest_path or len(path) > longest_path:
+            longest_path = len(path)
+            earliest_ancestor = current_node 
+   
+        # if current_node not in visited: 
+        #     visited.add(current_node)
+        for family_member in g.vertices[current_node]:
+            copy_path = path.copy()
+            copy_path.append(family_member)
+            q.enqueue(copy_path)
+    return earliest_ancestor
+
