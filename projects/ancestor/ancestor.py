@@ -54,7 +54,7 @@ def earliest_ancestor(ancestors, starting_node):
     # step 2 - traverse graph
     q = Queue()
     q.enqueue([starting_node])
-    # visited = set()
+    visited = set()
 
     #BIG MISTAKE HERE - Earliest ancestor (if there isn't any - is -1) // and the path will always be 1
     earliest_ancestor = -1
@@ -68,11 +68,14 @@ def earliest_ancestor(ancestors, starting_node):
             longest_path = len(path)
             earliest_ancestor = current_node 
    
-        # if current_node not in visited: 
-        #     visited.add(current_node)
-        for family_member in g.vertices[current_node]:
-            copy_path = path.copy()
-            copy_path.append(family_member)
-            q.enqueue(copy_path)
+        if current_node not in visited: 
+            visited.add(current_node)
+            for family_member in g.vertices[current_node]:
+                copy_path = path.copy()
+                copy_path.append(family_member)
+                q.enqueue(copy_path)
     return earliest_ancestor
 
+# check out lines 27, 59, 67 
+# if you take out 4, and make 5 point to 2 (2 is parent of 5) and (11 is parent of 8)
+    # 
