@@ -78,4 +78,3 @@ def earliest_ancestor(ancestors, starting_node):
 
 # check out lines 27, 59, 67 
 # if you take out 4, and make 5 point to 2 (2 is parent of 5) and (11 is parent of 8)
-    # 
