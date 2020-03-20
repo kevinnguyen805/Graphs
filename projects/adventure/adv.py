@@ -5,16 +5,20 @@ from world import World
 import random
 from ast import literal_eval
 
+from graph import Graph
+from util import Stack 
+from util import Queue
+
 # Load world
 world = World()
 
 
 # You may uncomment the smaller graphs for development and testing purposes.
-map_file = "maps/test_line.txt"
+# map_file = "maps/test_line.txt"
 # map_file = "maps/test_cross.txt"
 # map_file = "maps/test_loop.txt"
 # map_file = "maps/test_loop_fork.txt"
-# map_file = "maps/main_maze.txt"
+map_file = "maps/main_maze.txt"
 
 # Loads the map into a dictionary
 room_graph=literal_eval(open(map_file, "r").read())
@@ -30,7 +34,7 @@ player = Player(world.starting_room)
 traversal_path = [] # once you make the function that spits out traversal_path - test on line 52 should be done 
 
 # ADDING REVERSE 
-reversed_traversal_path = []
+# reversed_traversal_path = []
 
 
 
@@ -51,29 +55,27 @@ def find_exits(current_room, visited):
 def traverse_maze():
     visited = set()
     visited.add(player.current_room.id)
-    reversed_traversal_path = []
+    reversed_traversal_path = [] 
 
     while len(visited) < len(room_graph.keys()):
-        current_room = player.current_room.id 
+        current_room = player.current_room.id
         valid_exits = find_exits(player.current_room, visited)
         print(valid_exits)
 
         if len(valid_exits) > 0:
-            for direction in valid_exits: 
+            for direction in valid_exits:
                 visited.add(room_graph[current_room][1][direction])
                 traversal_path.append(direction)
                 reversed_traversal_path.append(opposite_direction[direction])
                 player.travel(direction)
-                break 
-            else: 
-                print(reversed_traversal_path)
-                direction = reversed_traversal_path.pop()
-                player.travel(direction)
-                traversal_path.append(direction)
+
+                break
+        else: 
+            print(reversed_traversal_path)
+            direction = reversed_traversal_path.pop()
+            player.travel(direction)
+            traversal_path.append(direction)
 traverse_maze()
-
-
-
 
 
 
@@ -85,6 +87,9 @@ traverse_maze()
 visited_rooms = set()
 player.current_room = world.starting_room
 visited_rooms.add(player.current_room)
+
+
+
 
 for move in traversal_path:
     player.travel(move)
