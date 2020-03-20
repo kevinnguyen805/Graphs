@@ -49,7 +49,7 @@ class SocialGraph:
         for i in range(num_users):
                 self.add_user(f"user{i+1}")
         
-        # Create friendships
+        # Create a list containing all possible friends 
         possible_friendships = []
 
         for user_id in self.users:
@@ -59,7 +59,7 @@ class SocialGraph:
         #shuffle the list 
         random.shuffle(possible_friendships)
 
-        # grab the first total_friendships pair from the list and create those friends
+        # grab the first half of total_friendship pairs from the list and create those friends
         for i in range(num_users * avg_friendships // 2):
             friendship = possible_friendships[i]
             self.add_friendship(friendship[0], friendship[1])
@@ -97,6 +97,8 @@ class SocialGraph:
 if __name__ == '__main__':
     sg = SocialGraph()
     sg.populate_graph(10, 2)
+    print('\n connections: ')
     print(sg.friendships)
+    print('\n social paths: ')
     connections = sg.get_all_social_paths(1)
     print(connections)

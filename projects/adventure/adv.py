@@ -27,8 +27,9 @@ player = Player(world.starting_room)
 
 # Fill this out with directions to walk
 # traversal_path = ['n', 'n']
-traversal_path = []
+traversal_path = [] # once you make the function that spits out traversal_path - test on line 52 should be done 
 
+# ADDING REVERSE - reversed_traversal_path = []
 
 
 # TRAVERSAL TEST
